@@ -26,6 +26,10 @@ jobs:
         run: npm install
         working-directory: user-service
 
+      - name: 🔧 Nastavi dovoljenja za Jest
+        run: chmod +x node_modules/.bin/jest
+        working-directory: user-service
+
       - name: 🧪 Run Unit Tests
         run: npm test
         working-directory: user-service

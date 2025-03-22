@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest"
+    "test": "jest --runInBand",
+    "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,12 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
-    "supertest": "^7.1.0"
+    "supertest": "^7.1.0",
+    "jest-junit": "^16.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "reporters": ["default", "jest-junit"]
   },
   "directories": {
     "test": "tests"

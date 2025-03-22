@@ -1,12 +1,10 @@
-name: CI - User Service
+name: Test User Service
 
 on:
   push:
     branches:
-      - main  
-  pull_request:
-    branches:
       - main
+      - develop
 
 jobs:
   test:
@@ -16,13 +14,18 @@ jobs:
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🔧 Setup Node.js
+      - name: 📦 Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  
+          node-version: 18
 
-      - name: 📦 Install dependencies
+      - name: 📂 Move to correct directory
+        run: cd user-service
+
+      - name: 📥 Install dependencies
         run: npm install
+        working-directory: user-service
 
-      - name: 🔬 Run Unit Tests
+      - name: 🧪 Run Unit Tests
         run: npm test
+        working-directory: user-service

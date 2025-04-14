@@ -23,4 +23,4 @@ mongoose.connect(process.env.MONGO_URI)
 // 🔹 Poveži authRoutes
 app.use("/api/auth", require("./routes/authRoutes"));
 
-module.exports = app;  // 🚀 Eksportamo samo `app`, brez `listen()`
+module.exports = app; 

@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  order-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:Trafelca123@pts.egfyo.mongodb.net/orders?retryWrites=true&w=majority
+      - SPRING_ARTEMIS_MODE=native
+      - SPRING_ARTEMIS_HOST=activemq
+      - SPRING_ARTEMIS_PORT=61616
+      - SPRING_ARTEMIS_USER=admin
+      - SPRING_ARTEMIS_PASSWORD=admin
+    depends_on:
+      - activemq
+
+  activemq:
+    image: symptoma/activemq
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN=admin
+      - ACTIVEMQ_ADMIN_PASSWORD=admin

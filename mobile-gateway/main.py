@@ -1,32 +1,33 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 app = FastAPI()
 
-USER_SERVICE_URL = os.getenv("USER_SERVICE_URL")
-RESTAURANT_SERVICE_URL = os.getenv("RESTAURANT_SERVICE_URL")
+origins = [
+    "*"
+]
 
-@app.get("/mobile/users/{path:path}")
-async def proxy_user(path: str, request: Request):
-    async with httpx.AsyncClient() as client:
-        response = await client.request(
-            method=request.method,
-            url=f"{USER_SERVICE_URL}/{path}",
-            headers=request.headers.raw,
-            params=request.query_params
-        )
-        return response.json()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.get("/mobile/restaurants/{path:path}")
-async def proxy_restaurant(path: str, request: Request):
+USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://localhost:5000")
+RESTAURANT_SERVICE_URL = os.getenv("RESTAURANT_SERVICE_URL", "http://localhost:5001")
+
+@app.get("/users")
+async def get_users():
     async with httpx.AsyncClient() as client:
-        response = await client.request(
-            method=request.method,
-            url=f"{RESTAURANT_SERVICE_URL}/{path}",
-            headers=request.headers.raw,
-            params=request.query_params
-        )
-        return response.json()
+        response = await client.get(f"{USER_SERVICE_URL}/users")
+    return response.json()
+
+@app.get("/restaurants")
+async def get_restaurants():
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f"{RESTAURANT_SERVICE_URL}/restaurants")
+    return response.json()

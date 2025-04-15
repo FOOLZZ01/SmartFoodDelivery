@@ -1,0 +1,74 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - smartnet
+
+  activemq:
+    image: rmohr/activemq
+    ports:
+      - "62616:61616"  # TCP konektor za JMS
+      - "8261:8161"    # Web konzola
+    networks:
+      - smartnet
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - smartnet
+
+  restaurant-service:
+    build: ./restaurant-service
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongo
+    networks:
+      - smartnet
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+      - activemq
+    networks:
+      - smartnet
+
+  web-gateway:
+    build: ./web-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - restaurant-service
+      - order-service
+    networks:
+      - smartnet
+
+  mobile-gateway:
+    build: ./mobile-gateway
+    ports:
+      - "8000:8000"
+    depends_on:
+      - user-service
+      - restaurant-service
+    networks:
+      - smartnet
+
+volumes:
+  mongo-data:
+
+networks:
+  smartnet:

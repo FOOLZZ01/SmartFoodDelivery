@@ -1,4 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: order-service
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:Trafelca123@pts.egfyo.mongodb.net/orders?retryWrites=true&w=majority
+  artemis:
+    mode: native
+    host: activemq
+    port: 61616  # NOT 62616! Spring se povezuje na *notranji* port
+    user: admin
+    password: admin
+
 logging:
   level:
     root: INFO
     com.smartdelivery.order: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

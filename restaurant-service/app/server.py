@@ -10,20 +10,20 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/.."))
 load_dotenv()
 
 from app.proto import restaurant_pb2, restaurant_pb2_grpc
-from app.services import menu_service
+from app.services import restaurant_service, menu_service  # ⬅️ dodan import
 
-PORT = os.getenv("PORT", "5002")
+PORT = os.getenv("PORT", "5001")
 
 class RestaurantServiceServicer(restaurant_pb2_grpc.RestaurantServiceServicer):
-    
+
     # Restavracija
     def AddRestaurant(self, request, context):
-        restaurant_id = menu_service.create_restaurant(request.name, request.location)
+        restaurant_id = restaurant_service.create_restaurant(request.name, request.location)
         logging.info(f"✅ Dodana restavracija z ID: {restaurant_id}")
         return restaurant_pb2.AddRestaurantResponse(id=restaurant_id)
 
     def GetRestaurant(self, request, context):
-        restaurant = menu_service.get_restaurant_by_id(request.id)
+        restaurant = restaurant_service.get_restaurant_by_id(request.id)
         if not restaurant:
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details('Restavracija ne obstaja')

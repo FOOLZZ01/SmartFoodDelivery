@@ -1,0 +1,146 @@
+/* src/index.css */
+
+/* 1) Barvna paleta in osnovne spremenljivke */
+:root {
+  --color-primary:    #4f46e5;
+  --color-secondary:  #818cf8;
+  --color-bg:         #f9fafb;
+  --color-surface:    #ffffff;
+  --color-border:     #e5e7eb;
+  --color-text:       #1f2937;
+  --radius:           0.5rem;
+  --spacing:          1rem;
+  --font-base:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2) Reset + box-sizing */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 3) Osnovni body styling */
+body {
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* 4) Container za centriranje vsebine */
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: var(--spacing);
+}
+
+/* 5) Kartice (cards) */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--spacing);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: var(--spacing);
+}
+
+/* 6) Gumbi in inputi */
+input,
+button {
+  font-family: inherit;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: var(--color-secondary);
+}
+
+/* 7) Navigacija */
+nav {
+  background-color: var(--color-surface);
+  padding: var(--spacing);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: var(--spacing);
+  display: flex;
+  gap: var(--spacing);
+}
+
+nav a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  transition: background-color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+  background-color: var(--color-secondary);
+  color: var(--color-surface);
+}
+
+/* 8) Naslovi */
+h1, h2, h3, h4 {
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+/* 9) Toast override (react-toastify) */
+.Toastify__toast {
+  border-radius: var(--radius) !important;
+  font-family: var(--font-base) !important;
+}
+
+.Toastify__toast--success {
+  background: #16a34a !important;
+}
+
+.Toastify__toast--error {
+  background: #dc2626 !important;
+}
+
+/* 10) Drobni dodatki */
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+pre {
+  background-color: var(--color-bg);
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+}

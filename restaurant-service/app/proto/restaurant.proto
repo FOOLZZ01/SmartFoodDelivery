@@ -4,8 +4,8 @@ package restaurant;
 
 service RestaurantService {
   // Restavracija
-  rpc AddRestaurant (AddRestaurantRequest) returns (AddRestaurantResponse);
-  rpc GetRestaurant (GetRestaurantRequest) returns (GetRestaurantResponse);
+  rpc AddRestaurant (Restaurant) returns (AddRestaurantResponse);
+  rpc GetRestaurant (GetRestaurantRequest) returns (Restaurant);
 
   // Meni
   rpc AddMenu (AddMenuRequest) returns (AddMenuResponse);
@@ -18,9 +18,10 @@ service RestaurantService {
 // Restavracija
 // ==============================
 
-message AddRestaurantRequest {
-  string name = 1;
-  string location = 2;
+message Restaurant {
+  string id = 1;
+  string name = 2;
+  string location = 3;
 }
 
 message AddRestaurantResponse {
@@ -29,12 +30,6 @@ message AddRestaurantResponse {
 
 message GetRestaurantRequest {
   string id = 1;
-}
-
-message GetRestaurantResponse {
-  string id = 1;
-  string name = 2;
-  string location = 3;
 }
 
 // ==============================

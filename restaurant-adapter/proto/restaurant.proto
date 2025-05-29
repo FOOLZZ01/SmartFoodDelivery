@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package restaurant;
+
+service RestaurantService {
+  rpc AddRestaurant (AddRestaurantRequest) returns (AddRestaurantResponse);
+  rpc GetRestaurant (GetRestaurantRequest) returns (GetRestaurantResponse);
+  rpc AddMenu (AddMenuRequest) returns (AddMenuResponse);
+  rpc GetMenu (GetMenuRequest) returns (GetMenuResponse);
+  rpc UpdateMenu (UpdateMenuRequest) returns (UpdateMenuResponse);
+  rpc DeleteMenu (DeleteMenuRequest) returns (DeleteMenuResponse);
+}
+
+// RESTAVRACIJA
+
+message AddRestaurantRequest {
+  string name = 1;
+  string location = 2;
+}
+
+message AddRestaurantResponse {
+  string id = 1;
+}
+
+message GetRestaurantRequest {
+  string id = 1;
+}
+
+message GetRestaurantResponse {
+  string id = 1;
+  string name = 2;
+  string location = 3;
+}
+
+// MENI
+
+message AddMenuRequest {
+  string restaurant_id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+}
+
+message AddMenuResponse {
+  string menu_id = 1;
+}
+
+message GetMenuRequest {
+  string restaurant_id = 1;
+}
+
+message MenuItem {
+  string menu_id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+}
+
+message GetMenuResponse {
+  repeated MenuItem items = 1;
+}
+
+message UpdateMenuRequest {
+  string menu_id = 1;
+  string name = 2;
+  string description = 3;
+  float price = 4;
+}
+
+message UpdateMenuResponse {
+  string message = 1;
+}
+
+message DeleteMenuRequest {
+  string menu_id = 1;
+}
+
+message DeleteMenuResponse {
+  string message = 1;
+}

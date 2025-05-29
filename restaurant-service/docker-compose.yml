@@ -1,11 +1,10 @@
-version: '3.8'
-
-services:
-  restaurant-service:
-    build: .
-    ports:
-      - "5002:5002"
-    environment:
-      - MONGO_URI=mongodb+srv://admin:Trafelca123@pts.egfyo.mongodb.net/users?retryWrites=true&w=majority
-      - PORT=5002
-      - JWT_SECRET=mysecretkey
+restaurant-service:
+  build: ./restaurant-service
+  ports:
+    - "5001:5001"
+  depends_on:
+    - mongo
+  env_file:
+    - ./restaurant-service/.env  # ✅ mora kazati na pravilno lokacijo
+  networks:
+    - smartnet

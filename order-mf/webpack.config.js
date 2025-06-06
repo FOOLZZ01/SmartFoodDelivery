@@ -1,5 +1,4 @@
-// user-mf/webpack.config.js
-const path = require("path");
+﻿const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 
@@ -8,20 +7,28 @@ module.exports = {
   mode: "development",
   output: {
     publicPath: "auto",
+    uniqueName: "order_mf"
   },
   devServer: {
-    port: 3003,
+    port: 3005,
     static: { directory: path.join(__dirname, "public") },
     historyApiFallback: true,
     headers: { "Access-Control-Allow-Origin": "*" },
-    // ← TU DODAJ PROXY za /api/auth:
+    hot: false,
+    liveReload: true,
+    // ---------- Tu dodamo proxy blok ----------
     proxy: {
-      "/api/auth": {
-        target: "http://localhost:5000",
+      // Vsi klici, ki začnejo z /api, bodo preusmerjeni na order-service
+      "/api": {
+        target: "http://localhost:8080", // order-service posluša na 8080
         changeOrigin: true,
         secure: false,
-      },
-    },
+        // Če želiš, lahko dodaš timeout-e:
+        // timeout: 60000,
+        // proxyTimeout: 60000
+      }
+    }
+    // -----------------------------------------
   },
   module: {
     rules: [
@@ -31,33 +38,33 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-          },
-        },
+            presets: ["@babel/preset-env", "@babel/preset-react"]
+          }
+        }
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-    ],
+        use: ["style-loader", "css-loader"]
+      }
+    ]
   },
   resolve: {
-    extensions: [".jsx", ".js"],
+    extensions: [".jsx", ".js"]
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "user_mf",
+      name: "order_mf",
       filename: "remoteEntry.js",
       exposes: {
-        "./UserApp": "./src/App.jsx",
+        "./OrderApp": "./src/App.jsx"
       },
       shared: {
         react:      { singleton: true, eager: true, requiredVersion: "^18.0.0" },
-        "react-dom":{ singleton: true, eager: true, requiredVersion: "^18.0.0" },
-      },
+        "react-dom":{ singleton: true, eager: true, requiredVersion: "^18.0.0" }
+      }
     }),
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-    }),
-  ],
+      template: path.resolve(__dirname, "./public/index.html")
+    })
+  ]
 };

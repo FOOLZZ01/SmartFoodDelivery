@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_AUTH = process.env.REACT_APP_API_URL || "http://localhost:5001/api/auth";
-const API_RESTAURANT = process.env.REACT_APP_RESTAURANT_URL || "http://localhost:5002/api/restaurants";
+const API_AUTH = process.env.REACT_APP_API_URL || "http://localhost:5000/api/auth";
+const API_RESTAURANT = process.env.REACT_APP_RESTAURANT_URL || "http://localhost:5001/api/restaurants";
 
 export const register = (userData) => axios.post(`${API_AUTH}/register`, userData);
 export const login = (userData) => axios.post(`${API_AUTH}/login`, userData);

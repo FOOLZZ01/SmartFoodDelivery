@@ -27,14 +27,14 @@ module.exports = {
     },
     hot: true,
 
-    // ← Add this proxy block to forward all `/api` calls
+    // ← Proxy block to forward all `/api` calls to your backend
     proxy: {
       "/api": {
         target: "http://host.docker.internal:5000",
         secure: false,
-        changeOrigin: true,
-      },
-    },
+        changeOrigin: true
+      }
+    }
   },
 
   module: {
@@ -69,11 +69,11 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: "shell",
-      filename: "remoteEntry.js",  // optional if you ever want to expose the shell itself
+      filename: "remoteEntry.js", // only needed if shell itself is consumed as a remote
       remotes: {
-        // your two microfrontends
         user_mf:        "user_mf@http://localhost:3003/remoteEntry.js",
-        restaurant_mf: "restaurant_mf@http://localhost:3004/remoteEntry.js"
+        restaurant_mf: "restaurant_mf@http://localhost:3004/remoteEntry.js",
+        order_mf:       "order_mf@http://localhost:3005/remoteEntry.js"
       },
       shared: {
         react:      { singleton: true, eager: true, requiredVersion: "^18.0.0" },

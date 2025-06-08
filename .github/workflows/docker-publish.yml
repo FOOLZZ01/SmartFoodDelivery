@@ -1,6 +1,6 @@
 name: Build & Publish Docker Images
 
-# Sproži ob vsakem pushu v branch main
+# Sproži ob vsakem pushu v glavni veji
 on:
   push:
     branches: [ main ]
@@ -9,20 +9,18 @@ jobs:
   docker-publish:
     runs-on: ubuntu-latest
 
-    # Matrix seznam vseh projektov, ki imajo svoj Dockerfile
     strategy:
       matrix:
-        service: [
-          "user-service",
-          "restaurant-service",
-          "order-service",
-          "web-gateway",
-          "mobile-gateway",
-          "shell",
-          "user-mf",
-          "restaurant-mf",
-          "order-mf"
-        ]
+        service:
+          - user-service
+          - restaurant-service
+          - order-service
+          - web-gateway
+          - mobile-gateway
+          - shell
+          - user-mf
+          - restaurant-mf
+          - order-mf
 
     steps:
       - name: Checkout repository
@@ -43,4 +41,5 @@ jobs:
           context: ./${{ matrix.service }}
           file: ./${{ matrix.service }}/Dockerfile
           push: true
-          tags: foolzz/itarhitekture:${{ matrix.service }}:latest
+          # En tag v formatu repository:tag
+          tags: foolzz/itarhitekture:${{ matrix.service }}

@@ -1,4 +1,3 @@
-// user-mf/webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -14,12 +13,13 @@ module.exports = {
     static: { directory: path.join(__dirname, "public") },
     historyApiFallback: true,
     headers: { "Access-Control-Allow-Origin": "*" },
-    // ← TU DODAJ PROXY za /api/auth:
     proxy: {
+      // nastavljen na port 5001, kjer tvoj auth-service teče
       "/api/auth": {
         target: "http://localhost:5000",
         changeOrigin: true,
         secure: false,
+        logLevel: "debug",
       },
     },
   },

@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Nastavi okoljske spremenljivke
-ENV PORT=5001
+ENV PORT=5000
 ENV MONGO_URI=mongodb+srv://admin:Trafelca123@pts.egfyo.mongodb.net/users?retryWrites=true&w=majority
 ENV JWT_SECRET=mysecretkey
 
